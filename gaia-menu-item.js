@@ -142,14 +142,14 @@ var template = `
   position: absolute;
   top: 50%;
   right: 0;
-  margin-top: -16px;
+  margin-top: -14px;
   font-family: 'gaia-icons';
-  font-size: 30px;
+  font-size: 28px;
   font-style: normal;
   text-rendering: optimizeLegibility;
   font-weight: 500;
   line-height: 1;
-  color: var(--color-epsilon);
+  color: var(--text-color-minus);
 }
 
 /** Anchors
