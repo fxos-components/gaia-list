@@ -223,6 +223,14 @@ if (!hasShadowCSS) {
   document.head.appendChild(style);
 })();
 
+
+addEventListener('keypress', function(e) {
+  var isSpace = e.which === 32;
+  var el = document.activeElement;
+  var isCheckbox = el.tagName === 'GAIA-MENU-ITEM';
+  if (isSpace && isCheckbox) { el.click(); }
+});
+
 // Register and return the constructor
 // and expose `protoype` (bug 1048339)
 module.exports = document.registerElement('gaia-menu-item', { prototype: proto });
