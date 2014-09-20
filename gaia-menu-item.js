@@ -191,7 +191,7 @@ var template = `
 
 </style>
 
-<div class="inner"><content></content></div>`;
+<div class="inner" tabindex="0"><content></content></div>`;
 
 // If the browser doesn't support shadow-css
 // selectors yet, we update the template
