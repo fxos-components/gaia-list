@@ -45,6 +45,7 @@ proto.createdCallback = function() {
 
   this.addEventListener('mousedown', this.onClick.bind(this));
   this.addEventListener('touchstart', this.onClick.bind(this));
+  this.tabIndex = 0;
 
   this.shadowStyleHack();
 };
@@ -191,7 +192,7 @@ var template = `
 
 </style>
 
-<div class="inner" tabindex="0"><content></content></div>`;
+<div class="inner"><content></content></div>`;
 
 // If the browser doesn't support shadow-css
 // selectors yet, we update the template
