@@ -43,7 +43,8 @@ proto.createdCallback = function() {
     inner: this.shadowRoot.querySelector('.inner')
   };
 
-  this.addEventListener('click', this.onClick.bind(this));
+  this.addEventListener('mousedown', this.onClick.bind(this));
+  this.addEventListener('touchstart', this.onClick.bind(this));
 
   this.shadowStyleHack();
 };
@@ -183,7 +184,7 @@ var template = `
   height: 30px;
   margin: -15px;
   border-radius: 50%;
-  animation: gaia-menu-item-ripple 500ms linear;
+  animation: gaia-menu-item-ripple 400ms linear;
   animation-fill-mode: forwards;
   will-change: transform, opacity;
 }
@@ -208,15 +209,15 @@ if (!hasShadowCSS) {
 
   style.innerHTML = `
     @keyframes gaia-menu-item-ripple {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0.3;
-      transform: scale(50);
-    }
-  }`;
+      0% {
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0.2;
+        transform: scale(50);
+      }
+    }`;
 
   document.head.appendChild(style);
 })();
