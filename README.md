@@ -1,11 +1,11 @@
-# &lt;gaia-menu-item&gt;
+# &lt;gaia-list&gt;
 
 ## Installation
 
 ```bash
-$ bower install gaia-components/gaia-menu-item
+$ bower install gaia-components/gaia-list
 ```
 
 ## Examples
 
-- [Example](http://gaia-components.github.io/gaia-menu-item/)
+- [Example](http://gaia-components.github.io/gaia-list/)
