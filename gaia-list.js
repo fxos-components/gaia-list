@@ -128,7 +128,7 @@ proto.onPointerDown = function(e) {
   this.els.inner.appendChild(els.container);
 
   // var reflow = els.ripple.offsetTop;
-  var scale = (pos.item.width / 15);
+  var scale = pos.item.width / 1.2;
   var duration = 500;
 
   setTimeout(function() {
@@ -268,15 +268,14 @@ label { background: transparent; }
  ---------------------------------------------------------*/
 
 .ripple-container > .ripple {
-  background: var(--background-minus);
+  background: var(--border-color);
   position: absolute;
   left: 0;
   top: 0;
-  width: 30px;
-  height: 30px;
-  margin: -15px;
+  width: 2px;
+  height: 2px;
+  margin: -1px;
   border-radius: 50%;
-  opacity: 0.2;
   transition-property: transform, opacity;
   will-change: transform;
 }
