@@ -153,7 +153,7 @@ var template = `
 /** Reset
  ---------------------------------------------------------*/
 
-label { background: transparent; }
+label { background: none; }
 
 /** Host
  ---------------------------------------------------------*/
@@ -163,32 +163,72 @@ label { background: transparent; }
   position: relative;
   font-size: 17px;
   overflow: hidden;
-  text-align: left;
 }
 
 /** Children
  ---------------------------------------------------------*/
 
 ::content > *:not(style) {
-  box-sizing: border-box;
   position: relative;
   z-index: 2;
+
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
   width: 100%;
   min-height: 60px;
-  margin: 0;
   padding: 9px 16px;
+  margin: 0;
+  border: 0;
+  outline: 0;
+
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
   background: transparent;
+  align-items: center;
   list-style-type: none;
-  outline: 0;
-  border: 0;
 
   color:
     var(--text-color);
+}
+
+::content > a {
+  cursor: pointer;
+}
+
+/** Titles
+ ---------------------------------------------------------*/
+
+::content h1,
+::content h2,
+::content h3,
+::content h4 {
+  font-weight: 400;
+}
+
+/** Layout Helpers
+ ---------------------------------------------------------*/
+
+/**
+ * [flexbox]
+ *
+ * A helper attribute to allow users to
+ * quickly define content as a flexbox.
+ */
+
+::content [flexbox] {
+  display: flex;
+}
+
+/**
+ * [flex]
+ *
+ * A helper attribute to allow users to
+ * quickly define area as flexible.
+ */
+
+::content [flex] {
+  flex: 1;
 }
 
 /** Border
@@ -197,7 +237,7 @@ label { background: transparent; }
 ::content > *:before {
   content: '';
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   left: 16px;
   right: 16px;
   height: 1px;
@@ -205,6 +245,10 @@ label { background: transparent; }
   background:
     var(--border-color,
     var(--background-plus));
+}
+
+::content > :first-child:before {
+  display: none;
 }
 
 /** Titles
