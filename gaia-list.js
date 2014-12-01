@@ -55,8 +55,6 @@ proto.makeAccessible = function() {
 proto.shadowStyleHack = function() {
   if (hasShadowCSS) { return; }
   var style = this.shadowRoot.querySelector('style').cloneNode(true);
-  this.classList.add('-content', '-host');
-  style.setAttribute('scoped', '');
   this.appendChild(style);
 };
 
@@ -231,21 +229,19 @@ label { background: transparent; }
 }
 
 ::content > * > i:last-child {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  margin-top: -14px;
-  line-height: 1;
-  text-align: right;
+  width: auto;
+}
+
+[dir=rtl] ::content i:before {
+  transform: scale(-1, 1);
 }
 
 /** Divided
  ---------------------------------------------------------*/
 
 ::content .divided {
-  border-left: solid 1px;
-  padding-left: 14px;
+  -moz-border-start: solid 1px;
+  -moz-padding-start: 14px;
 
   border-color:
     var(--border-color,
@@ -260,7 +256,6 @@ label { background: transparent; }
   position: absolute;
   z-index: -1;
   padding-top: 1px;
-  margin-top: -1px;
   overflow: hidden;
 }
 
@@ -289,8 +284,8 @@ label { background: transparent; }
 // to use the shim classes instead.
 if (!hasShadowCSS) {
   template = template
-    .replace('::content', '.-content', 'g')
-    .replace(':host', '.-host', 'g');
+    .replace('::content', 'gaia-list', 'g')
+    .replace(':host', 'gaia-list', 'g');
 }
 
 var scrolling = false;
