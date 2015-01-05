@@ -137,10 +137,11 @@ label { background: none; }
  ---------------------------------------------------------*/
 
 :host {
-  display: block;
   position: relative;
-  font-size: 17px;
+
+  display: block;
   overflow: hidden;
+  font-size: 17px;
 }
 
 /** Children
