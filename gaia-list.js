@@ -58,28 +58,6 @@ proto.shadowStyleHack = function() {
   this.appendChild(style);
 };
 
-proto.attachedCallback = function() {
-  this.restyleShadowDom();
-  this.rerunFontFit();
-};
-
-/**
- * Workaround for bug 1056783.
- *
- * Fixes shadow-dom stylesheets not applying
- * when shadow host node is detached on
- * shadow-root creation.
- *
- * TODO: Needs abstraction
- *
- * @private
- */
-proto.restyleShadowDom = function() {
-  var style = this.shadowRoot.querySelector('style');
-  this.shadowRoot.removeChild(style);
-  this.shadowRoot.appendChild(style);
-};
-
 proto.itemShouldRipple = function(el) {
   if (scrolling) { return false; }
   else if (el.classList.contains('ripple')) { return true; }
