@@ -122,7 +122,7 @@ proto.onPointerDown = function(e) {
 };
 
 proto.getChild = function(el) {
-  return el.parentNode === this ? el : this.getChild(el.parentNode);
+  return el && (el.parentNode === this ? el : this.getChild(el.parentNode));
 };
 
 var template = `
