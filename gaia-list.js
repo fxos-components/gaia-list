@@ -2,6 +2,12 @@
 /*jshint esnext:true*/
 
 /**
+ * Dependencies
+ */
+
+var component = require('gaia-component');
+
+/**
  * Pointer event abstraction to make
  * it work for touch and mouse.
  *
@@ -13,303 +19,272 @@ var pointer = [
 ]['ontouchstart' in window ? 0 : 1];
 
 /**
- * Detects presence of shadow-dom
- * CSS selectors.
- *
- * @return {Boolean}
+ * Exports
  */
-var hasShadowCSS = (function() {
-  try { document.querySelector(':host'); return true; }
-  catch (e) { return false; }
-})();
 
-/**
- * Element prototype, extends from HTMLElement
- *
- * @type {Object}
- */
-var proto = Object.create(HTMLElement.prototype);
+module.exports = component.register('gaia-list', {
+  created: function() {
+    this.setupShadowRoot();
+    this.els = { inner: this.shadowRoot.querySelector('.inner') };
+    this.addEventListener('click', this.onPointerDown);
+    this.makeAccessible();
+  },
 
-/**
- * Called when the element is first created.
- *
- * Here we create the shadow-root and
- * inject our template into it.
- *
- * @private
- */
-proto.createdCallback = function() {
-  this.createShadowRoot().innerHTML = template;
-  this.els = { inner: this.shadowRoot.querySelector('.inner') };
-  this.addEventListener('click', this.onPointerDown.bind(this));
-  this.shadowStyleHack();
-  this.makeAccessible();
-};
+  makeAccessible: function() {
+    [].forEach.call(this.children, (el) => { el.tabIndex = 0; });
+  },
 
-proto.makeAccessible = function() {
-  [].forEach.call(this.children, function(el) {
-    el.tabIndex = 0;
-  });
-};
+  itemShouldRipple: function(el) {
+    if (scrolling) { return false; }
+    else if (el.classList.contains('ripple')) { return true; }
+    else if (el.classList.contains('no-ripple')) { return false; }
+    else if (this.classList.contains('ripple')){ return true; }
+    else if (this.classList.contains('no-ripple')){ return false; }
+    else if (el.tagName === 'A') { return true; }
+    else { return false; }
+  },
 
-proto.shadowStyleHack = function() {
-  if (hasShadowCSS) { return; }
-  var style = this.shadowRoot.querySelector('style').cloneNode(true);
-  this.appendChild(style);
-};
+  onPointerDown: function(e) {
+    var point = e.touches ? e.changedTouches[0] : e;
+    var target = this.getChild(e.target);
 
-proto.itemShouldRipple = function(el) {
-  if (scrolling) { return false; }
-  else if (el.classList.contains('ripple')) { return true; }
-  else if (el.classList.contains('no-ripple')) { return false; }
-  else if (this.classList.contains('ripple')){ return true; }
-  else if (this.classList.contains('no-ripple')){ return false; }
-  else if (el.tagName === 'A') { return true; }
-  else { return false; }
-};
+    if (!this.itemShouldRipple(target)) { return; }
 
-proto.onPointerDown = function(e) {
-  var point = e.touches ? e.changedTouches[0] : e;
-  var target = this.getChild(e.target);
+    var pos = {
+      list: this.getBoundingClientRect(),
+      item: target.getBoundingClientRect()
+    };
 
-  if (!this.itemShouldRipple(target)) { return; }
+    var els = {
+      container: document.createElement('div'),
+      ripple: document.createElement('div')
+    };
 
-  var pos = {
-    list: this.getBoundingClientRect(),
-    item: target.getBoundingClientRect()
-  };
+    els.container.className = 'ripple-container';
+    els.container.style.left = (pos.item.left - pos.list.left) + 'px';
+    els.container.style.top = (pos.item.top - pos.list.top) + 'px';
+    els.container.style.width = pos.item.width + 'px';
+    els.container.style.height = pos.item.height + 'px';
 
-  var els = {
-    container: document.createElement('div'),
-    ripple: document.createElement('div')
-  };
+    var offset = {
+      x: point.clientX - pos.item.left,
+      y: point.clientY - pos.item.top
+    };
 
-  els.container.className = 'ripple-container';
-  els.container.style.left = (pos.item.left - pos.list.left) + 'px';
-  els.container.style.top = (pos.item.top - pos.list.top) + 'px';
-  els.container.style.width = pos.item.width + 'px';
-  els.container.style.height = pos.item.height + 'px';
+    els.ripple.className = 'ripple';
+    els.ripple.style.left = offset.x + 'px';
+    els.ripple.style.top = offset.y + 'px';
+    els.ripple.style.visibility = 'hidden';
 
-  var offset = {
-    x: point.clientX - pos.item.left,
-    y: point.clientY - pos.item.top
-  };
+    els.container.appendChild(els.ripple);
+    this.els.inner.appendChild(els.container);
 
-  els.ripple.className = 'ripple';
-  els.ripple.style.left = offset.x + 'px';
-  els.ripple.style.top = offset.y + 'px';
-  els.ripple.style.visibility = 'hidden';
+    // var reflow = els.ripple.offsetTop;
+    var scale = pos.item.width / 1.2;
+    var duration = 500;
 
-  els.container.appendChild(els.ripple);
-  this.els.inner.appendChild(els.container);
-
-  // var reflow = els.ripple.offsetTop;
-  var scale = pos.item.width / 1.2;
-  var duration = 500;
-
-  setTimeout(function() {
-    els.ripple.style.visibility = '';
-    els.ripple.style.transform = 'scale(' + scale + ')';
-    els.ripple.style.transitionDuration = duration  + 'ms';
     setTimeout(function() {
-      els.ripple.style.transitionDuration = '1000ms';
-      els.ripple.style.opacity = '0';
+      els.ripple.style.visibility = '';
+      els.ripple.style.transform = 'scale(' + scale + ')';
+      els.ripple.style.transitionDuration = duration  + 'ms';
       setTimeout(function() {
-        els.container.remove();
-      }, 1000);
-    }, duration);
-  });
-};
+        els.ripple.style.transitionDuration = '1000ms';
+        els.ripple.style.opacity = '0';
+        setTimeout(function() {
+          els.container.remove();
+        }, 1000);
+      }, duration);
+    });
+  },
 
-proto.getChild = function(el) {
-  return el && (el.parentNode === this ? el : this.getChild(el.parentNode));
-};
+  getChild: function(el) {
+    return el && (el.parentNode === this ? el : this.getChild(el.parentNode));
+  },
 
-var template = `
-<style>
+  template: `
+    <div class="inner">
+      <content></content>
+    </div>
 
-/** Reset
- ---------------------------------------------------------*/
+    <style>
 
-label { background: none; }
+    /** Reset
+     ---------------------------------------------------------*/
 
-/** Host
- ---------------------------------------------------------*/
+    label { background: none; }
 
-:host {
-  position: relative;
+    /** Host
+     ---------------------------------------------------------*/
 
-  display: block;
-  overflow: hidden;
-  font-size: 17px;
-}
+    :host {
+      position: relative;
 
-/** Children
- ---------------------------------------------------------*/
+      display: block;
+      overflow: hidden;
+      font-size: 17px;
+    }
 
-::content > *:not(style) {
-  position: relative;
-  z-index: 2;
+    /** Children
+     ---------------------------------------------------------*/
 
-  box-sizing: border-box;
-  display: flex;
-  width: 100%;
-  min-height: 60px;
-  padding: 9px 16px;
-  margin: 0;
-  border: 0;
-  outline: 0;
+    ::content > *:not(style) {
+      position: relative;
+      z-index: 2;
 
-  font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  background: transparent;
-  align-items: center;
-  list-style-type: none;
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      min-height: 60px;
+      padding: 9px 16px;
+      margin: 0;
+      border: 0;
+      outline: 0;
 
-  color:
-    var(--text-color);
-}
+      font-size: 18px;
+      font-weight: normal;
+      font-style: normal;
+      background: transparent;
+      align-items: center;
+      list-style-type: none;
 
-::content > a {
-  cursor: pointer;
-}
+      color:
+        var(--text-color);
+    }
 
-/** Titles
- ---------------------------------------------------------*/
+    ::content > a {
+      cursor: pointer;
+    }
 
-::content h1,
-::content h2,
-::content h3,
-::content h4 {
-  font-weight: 400;
-}
+    /** Titles
+     ---------------------------------------------------------*/
 
-/** Layout Helpers
- ---------------------------------------------------------*/
+    ::content h1,
+    ::content h2,
+    ::content h3,
+    ::content h4 {
+      font-weight: 400;
+    }
 
-/**
- * [flexbox]
- *
- * A helper attribute to allow users to
- * quickly define content as a flexbox.
- */
+    /** Layout Helpers
+     ---------------------------------------------------------*/
 
-::content [flexbox] {
-  display: flex;
-}
+    /**
+     * [flexbox]
+     *
+     * A helper attribute to allow users to
+     * quickly define content as a flexbox.
+     */
 
-/**
- * [flex]
- *
- * A helper attribute to allow users to
- * quickly define area as flexible.
- */
+    ::content [flexbox] {
+      display: flex;
+    }
 
-::content [flex] {
-  flex: 1;
-}
+    /**
+     * [flex]
+     *
+     * A helper attribute to allow users to
+     * quickly define area as flexible.
+     */
 
-/** Border
- ---------------------------------------------------------*/
+    ::content [flex] {
+      flex: 1;
+    }
 
-::content > *:before {
-  content: '';
-  position: absolute;
-  top: 0px;
-  left: 16px;
-  right: 16px;
-  height: 1px;
+    /** Border
+     ---------------------------------------------------------*/
 
-  background:
-    var(--border-color,
-    var(--background-plus));
-}
+    ::content > *:before {
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: 16px;
+      right: 16px;
+      height: 1px;
 
-::content > :first-child:before {
-  display: none;
-}
+      background:
+        var(--border-color,
+        var(--background-plus));
+    }
 
-/** Titles
- ---------------------------------------------------------*/
+    ::content > :first-child:before {
+      display: none;
+    }
 
-::content small,
-::content p {
-  font-size: 0.7em;
-  line-height: 1.35em;
-}
+    /** Titles
+     ---------------------------------------------------------*/
 
-/** Icon
- ---------------------------------------------------------*/
+    ::content small,
+    ::content p {
+      font-size: 0.7em;
+      line-height: 1.35em;
+    }
 
-::content i {
-  display: inline-block;
-  width: 40px;
-}
+    /** Icon
+     ---------------------------------------------------------*/
 
-::content i:before {
-  display: block;
-}
+    ::content i {
+      display: inline-block;
+      width: 40px;
+    }
 
-::content > * > i:last-child {
-  width: auto;
-}
+    ::content i:before {
+      display: block;
+    }
 
-[dir=rtl] ::content i:before {
-  transform: scale(-1, 1);
-}
+    ::content > * > i:last-child {
+      width: auto;
+    }
 
-/** Divided
- ---------------------------------------------------------*/
+    /**
+     * Reverse the icons when the document is RTL mode
+     */
 
-::content .divided {
-  -moz-border-start: solid 1px;
-  -moz-padding-start: 14px;
+    :host-context([dir=rtl]) ::content i:before {
+      transform: scale(-1, 1);
+    }
 
-  border-color:
-    var(--border-color,
-    var(--background-plus));
-}
+    /** Divided
+     ---------------------------------------------------------*/
 
-/** Ripple Container
- ---------------------------------------------------------*/
+    ::content .divided {
+      -moz-border-start: solid 1px;
+      -moz-padding-start: 14px;
 
-.ripple-container.ripple-container {
-  box-sizing: content-box;
-  position: absolute;
-  z-index: -1;
-  padding-top: 1px;
-  overflow: hidden;
-}
+      border-color:
+        var(--border-color,
+        var(--background-plus));
+    }
 
-/** Ripple
- ---------------------------------------------------------*/
+    /** Ripple Container
+     ---------------------------------------------------------*/
 
-.ripple-container > .ripple {
-  background: var(--border-color);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 2px;
-  height: 2px;
-  margin: -1px;
-  border-radius: 50%;
-  transition-property: transform, opacity;
-  will-change: transform;
-}
+    .ripple-container.ripple-container {
+      box-sizing: content-box;
+      position: absolute;
+      z-index: -1;
+      padding-top: 1px;
+      overflow: hidden;
+    }
 
-</style>
+    /** Ripple
+     ---------------------------------------------------------*/
 
-<div class="inner"><content></content></div>`;
+    .ripple-container > .ripple {
+      background: var(--border-color);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 2px;
+      margin: -1px;
+      border-radius: 50%;
+      transition-property: transform, opacity;
+      will-change: transform;
+    }
 
-// If the browser doesn't support shadow-css
-// selectors yet, we update the template
-// to use the shim classes instead.
-if (!hasShadowCSS) {
-  template = template
-    .replace('::content', 'gaia-list', 'g')
-    .replace(':host', 'gaia-list', 'g');
-}
+    </style>
+  `
+});
 
 var scrolling = false;
 var scrollTimeout;
@@ -321,11 +296,6 @@ addEventListener('scroll', function() {
     scrolling = false;
   }, 100);
 });
-
-// Register and return the constructor
-// and expose `protoype` (bug 1048339)
-module.exports = document.registerElement('gaia-list', { prototype: proto });
-module.exports.proto = proto;
 
 });})(typeof define=='function'&&define.amd?define
 :(function(n,w){'use strict';return typeof module=='object'?function(c){
