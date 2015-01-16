@@ -5,7 +5,7 @@
   "authors": [
     "Wilson Page <wilsonpage@me.com>"
   ],
-  "main": "script.js",
+  "main": "gaia-list.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
