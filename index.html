@@ -11,12 +11,18 @@
   <script src="bower_components/gaia-theme/lib/gaia-theme-selector.js"></script>
   <script src="bower_components/gaia-icons/gaia-icons.js"></script>
   <script src="bower_components/gaia-component/gaia-component.js"></script>
+  <script src="bower_components/drag/drag.js"></script>
+  <script src="bower_components/gaia-switch/gaia-switch.js"></script>
   <script src="gaia-list.js"></script>
   <style type="text/css">
 
     body {
       padding: 16px;
       padding-top: 48px;
+    }
+
+    h2 {
+      margin: 32px 16px;
     }
 
     gaia-list.settings [data-icon='forward'] {
@@ -33,11 +39,8 @@
     }
 
     gaia-list.contacts .face {
-      position: absolute;
-      top: 50%; right: 16px;
       width: 40px;
       height: 40px;
-      margin-top: -20px;
       border-radius: 50%;
       border: solid 2px;
 
@@ -47,16 +50,8 @@
       background: var(--background-plus);
     }
 
-    gaia-list.email > * {
-      padding-left: 32px !important;
-    }
-
-    gaia-list.email time {
-      position: absolute;
-      right: 0; top: 0;
-      margin: 9px 16px;
-      font-size: 0.7em;
-      opacity: 0.6;
+    gaia-list.email section:first-child {
+      padding-left: 16px;
     }
 
     gaia-list.email p {
@@ -77,6 +72,17 @@
         var(--highlight-color);
     }
 
+    gaia-list time {
+      font-size: 0.7em;
+      opacity: 0.6;
+    }
+
+    gaia-list.manually-styled time {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 9px 16px;
+    }
 
   </style>
 </head>
@@ -84,84 +90,213 @@
   <gaia-theme-selector></gaia-theme-selector>
   <h1 class="large l-align-center l-mb-mega">&lt;gaia-list&gt;</h1>
   <section>
+    <h2>Menu with icons, 2 sections per item</h2>
     <gaia-list class="settings l-mb-mega">
       <a>
-        <i data-icon="brightness"></i><h3>Menu 1</h3><i data-icon="forward-light"></i></a>
-      <a><i data-icon="location"></i><h3>Menu 2</h3><i data-icon="forward-light"></i></a>
-      <a><i data-icon="settings"></i>Menu 3<i data-icon="forward-light"></i></a>
-      <li>
-        <label class="l-flex l-flex-grow" for="wifi-switch">
-          <i data-icon="wifi-4"></i><h3>Wifi</h3>
-        </label>
-        <gaia-switch id="wifi-switch" class="divided"></gaia-switch>
-      </li>
+        <section>
+          <i data-icon="brightness"></i> Menu 1
+        </section>
+        <section>
+          <i data-icon="forward-light"></i>
+        </section>
+      </a>
+      <a>
+        <section>
+          <i data-icon="location"></i> Menu 2
+        </section>
+        <section>
+          <i data-icon="forward-light"></i>
+        </section>
+      <a>
+        <section>
+          <i data-icon="settings"></i> Menu 3
+        </section>
+        <section>
+          <i data-icon="forward-light"></i>
+        </section>
+      </a>
+      <a>
+        <section>
+          <label for="wifi-switch">
+            <i data-icon="wifi-4"></i> WiFi
+          </label>
+        </section>
+        <section>
+          <gaia-switch id="wifi-switch" class="divided"></gaia-switch>
+        </section>
+      </a>
     </gaia-list>
 
+    <h2>Menu with 2 sections per item, second one is display: block</h2>
     <gaia-list class="contacts l-mb-mega">
       <a>
-        <div>
+        <section>
           <h3>Noah Green</h3>
           <p>Atsara Kitchens</p>
+        </section>
+        <section>
           <div class="face"></div>
-        </div>
+        </section>
       </a>
       <a>
-        <div>
+        <section>
           <h3>Will Grand</h3>
           <p>CBN Studio</p>
+        </section>
+        <section>
           <div class="face"></div>
-        </div>
+        </section>
       </a>
       <a>
-        <div>
+        <section>
           <h3>Carolina Grey</h3>
           <p>Mozilla</p>
+        </section>
+        <section>
           <div class="face"></div>
-        </div>
+        </section>
       </a>
     </gaia-list>
 
-    <gaia-list class="email">
+    <h2>Menu with 2 sections per item, second one is pinned</h2>
+    <gaia-list class="email l-mb-mega">
       <a class="unread">
-        <div>
+        <section>
           <h3>Will Gordan</h3>
           <p>Send photos please!</p>
-          <p>You're the best, thank you so much for all</p><time>11:30AM</time>
-        </div>
+          <p>You're the best, thank you so much for all</p>
+        </section>
+        <section class="pin-top">
+          <time>11:30AM</time>
+        </section>
       </a>
       <a class="unread">
-        <div>
+        <section>
           <h3>Jennifer Liu</h3>
           <p>Road trip next weekend</p>
           <p>I've been wanting to visit that place for a</p>
+        </section>
+        <section class="pin-top">
           <time>11:30AM</time>
-        </div>
+        </section>
       </a>
       <a>
-        <div>
+        <section>
           <h3>Michael Stanford</h3>
           <p>You might like this or not?</p>
           <p>Great find, I definitely check with Brian if</p>
+        </section>
+        <section class="pin-top">
           <time>11:30AM</time>
-        </div>
+        </section>
       </a>
       <a class="unread">
-        <div>
+        <section>
           <h3>Jennifer Liu</h3>
           <p>Road trip next weekend</p>
           <p>I'vee been wanting to visit that place for a</p>
+        </section>
+        <section class="pin-top">
           <time>11:30AM</time>
+        </section>
+      </a>
+      <a>
+        <section>
+          <h3>Michael Stanford</h3>
+          <p>You might like this or not?</p>
+          <p>Great find, I definitely check with Brian if</p>
+        </section>
+        <section class="pin-top">
+          <time>11:30AM</time>
+        </section>
+      </a>
+    </gaia-list>
+
+    <h2>Menu with 1 section per item</h2>
+    <gaia-list class="l-mb-mega">
+      <a>
+        <section>Lorum</section>
+      </a>
+      <a>
+        <section>Ipsum</section>
+      </a>
+      <a>
+        <section>Dolor</section>
+      </a>
+      <a>
+        <section>Sit</section>
+      </a>
+    </gaia-list>
+
+    <h2>Menu with 2 sections per item, second is an icon; last item has 3 sections, middle one is centered</h2>
+    <gaia-list class="l-mb-mega">
+      <a>
+        <section>
+          <i data-icon="call"></i>
+          Dialer
+        </section>
+        <section>
+          <i data-icon="download"></i>
+        </section>
+      </a>
+      <a>
+        <section>
+          <i data-icon="contacts"></i>
+          Contacts
+        </section>
+        <section>
+          <i data-icon="download"></i>
+        </section>
+      </a>
+      <a>
+        <section>
+          <i data-icon="messages"></i>
+          Messages
+        </section>
+        <section>
+          <i data-icon="download"></i>
+        </section>
+      </a>
+      <a>
+        <section>
+          <i data-icon="sync"></i>
+        </section>
+        <section>
+          Tap to load more
+        </section>
+        <section>
+          ...
+        </section>
+      </a>
+    </gaia-list>
+
+    <h2>Menu that is manually styled without assistance from gaia-list</h2>
+    <gaia-list class="manually-styled l-mb-mega">
+      <a>
+        <div>
+          <h3>New York Times</h3>
+          <p>A news company in the US.</p>
+          <p>Contains news.</p>
+          <time>10:30 AM</time>
         </div>
       </a>
       <a>
         <div>
-          <h3>Michael Stanford</h3>
-          <p>You might like this or not?</p>
-          <p>Great find, I definitely check with Brian if</p>
-          <time>11:30AM</time>
+          <h3>BBC</h3>
+          <p>A news company in the UK.</p>
+          <p>Also contains news.</p>
+          <time>12:32 PM</time>
         </div>
       </a>
-    </gaia-list>
+      <a>
+        <div>
+          <h3>Al Jazeera</h3>
+          <p>A news company in Qatar.</p>
+          <p>Contains news.</p>
+          <time>08:12 AM</time>
+        </div>
+      </a>
+    </gaia>
   </section>
 </body>
 </html>
