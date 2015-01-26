@@ -155,6 +155,42 @@ module.exports = component.register('gaia-list', {
       cursor: pointer;
     }
 
+    /** Sections
+     ---------------------------------------------------------*/
+    ::content section {
+      flex: auto;
+    }
+
+    ::content section * {
+      vertical-align: middle;
+    }
+
+    /* Right-align the last element when there are multiple. */
+    ::content section:nth-last-child(2) ~ *:last-child {
+      text-align: right;
+    }
+
+    /* This can get us in trouble, but content can override it. For most use
+     * cases, this is preferable. */
+    ::content section:nth-last-child(2) ~ *:last-child * {
+      display: inline-block;
+    }
+
+    /* Center all elements that aren't the first or last element. */
+    ::content section:nth-last-child(3) ~ *:not(first-child):not(last-child) {
+      text-align: center;
+    }
+
+    /** Section pins
+     ---------------------------------------------------------*/
+    ::content section.pin-top {
+      align-self: flex-start;
+    }
+
+    ::content section.pin-bottom {
+      align-self: flex-end;
+    }
+
     /** Titles
      ---------------------------------------------------------*/
 
