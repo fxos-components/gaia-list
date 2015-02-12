@@ -20,7 +20,7 @@
     "gaia-icons": "gaia-components/gaia-icons#~0.6.1"
   },
   "dependencies": {
-    "gaia-component": "gaia-components/gaia-component#~0.2.0",
+    "gaia-component": "gaia-components/gaia-component#~0.3.0",
     "base": "gaia-components/base"
   }
 }
