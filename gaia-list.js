@@ -209,7 +209,8 @@ module.exports = component.register('gaia-list', {
     /* Hack: Hide the line before the second element, since the first element is
      * the <style scoped> element */
     ::content > :first-child:before,
-    ::content > style:first-child ~ :nth-child(2):before {
+    ::content > style:first-child ~ :nth-child(2):before,
+    ::content > .borderless:before {
       display: none;
     }
 
