@@ -210,6 +210,9 @@ module.exports = component.register('gaia-list', {
      * the <style scoped> element */
     ::content > :first-child:before,
     ::content > style:first-child ~ :nth-child(2):before,
+    ::content > gaia-header:first-child ~ :nth-child(2):before,
+    ::content > h1:first-child ~ :nth-child(2):before,
+    ::content > h2:first-child ~ :nth-child(2):before,
     ::content > .borderless:before {
       display: none;
     }
