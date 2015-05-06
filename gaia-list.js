@@ -1,5 +1,5 @@
+/* global define */
 ;(function(define){'use strict';define(function(require,exports,module){
-/*jshint esnext:true*/
 
 /**
  * Dependencies
@@ -13,10 +13,12 @@ var component = require('gaia-component');
  *
  * @type {Object}
  */
+/*jshint ignore:start */
 var pointer = [
   { down: 'touchstart', up: 'touchend', move: 'touchmove' },
   { down: 'mousedown', up: 'mouseup', move: 'mousemove' }
 ]['ontouchstart' in window ? 0 : 1];
+/*jshint ignore:end */
 
 /**
  * Exports
