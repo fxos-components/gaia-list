@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>&lt;gaia-list&gt;</title>
   <meta name="description" content="gaia-list example" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="stylesheet" type="text/css" href="bower_components/base/base.css">
   <link rel="stylesheet" type="text/css" href="bower_components/gaia-theme/gaia-theme.css">
   <link rel="stylesheet" type="text/css" href="bower_components/gaia-fonts/style.css">
@@ -11,6 +12,7 @@
   <script src="bower_components/gaia-theme/lib/gaia-theme-selector.js"></script>
   <script src="bower_components/gaia-icons/gaia-icons.js"></script>
   <script src="bower_components/gaia-component/gaia-component.js"></script>
+  <script src="bower_components/gaia-switch/gaia-switch.js"></script>
   <script src="gaia-list.js"></script>
   <style type="text/css">
 
@@ -19,17 +21,20 @@
       padding-top: 48px;
     }
 
+    body > section {
+      max-width: 800px;
+      border: solid 1px var(--border-color);
+      margin: 0 auto;
+      margin-bottom: var(--base-xxl);
+    }
+
     gaia-list.settings [data-icon='forward'] {
       color: var(--text-color-minus);
     }
 
+    /* XXX temporary hack to make divider not inherit from switch */
     gaia-list .divided {
-      border-left: solid 1px;
-      padding-left: 14px;
-
-      border-color:
-        var(--border-color,
-        var(--background-plus));
+      border-radius: 0 !important;
     }
 
     gaia-list.contacts .face {
@@ -84,18 +89,32 @@
   <gaia-theme-selector></gaia-theme-selector>
   <h1 class="large l-align-center l-mb-mega">&lt;gaia-list&gt;</h1>
   <section>
-    <gaia-list class="settings l-mb-mega">
+    <gaia-list class="settings">
       <a>
-        <i data-icon="brightness"></i><h3>Menu 1</h3><i data-icon="forward-light"></i></a>
-      <a><i data-icon="location"></i><h3>Menu 2</h3><i data-icon="forward-light"></i></a>
-      <a><i data-icon="settings"></i>Menu 3<i data-icon="forward-light"></i></a>
-      <li>
-        <label class="l-flex l-flex-grow" for="wifi-switch">
-          <i data-icon="wifi-4"></i><h3>Wifi</h3>
+        <i data-icon="brightness"></i>
+        <h3 flex>Menu 1</h3>
+        <i data-icon="forward-light"></i>
+      </a>
+      <a>
+        <i data-icon="location"></i>
+        <h3 flex>Menu 2</h3>
+        <i data-icon="forward-light"></i>
+      </a>
+      <a>
+        <i data-icon="settings"></i>
+        <h3 flex>Menu 3</h3>
+        <i data-icon="forward-light"></i>
+      </a>
+      <li class="ripple">
+        <label flex flexbox for="wifi-switch">
+          <i data-icon="wifi-4"></i>
+          <h3>Wifi</h3>
         </label>
         <gaia-switch id="wifi-switch" class="divided"></gaia-switch>
       </li>
     </gaia-list>
+
+    <hr>
 
     <gaia-list class="contacts l-mb-mega">
       <a>
@@ -120,6 +139,8 @@
         </div>
       </a>
     </gaia-list>
+
+    <hr>
 
     <gaia-list class="email">
       <a class="unread">

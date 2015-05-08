@@ -15,12 +15,13 @@
     "tests"
   ],
   "devDependencies": {
-    "gaia-theme": "gaia-components/gaia-theme#dev",
+    "base": "gaia-components/base",
     "gaia-fonts": "gaia-components/gaia-fonts#~0.2.1",
-    "gaia-icons": "gaia-components/gaia-icons#~0.6.1"
+    "gaia-icons": "gaia-components/gaia-icons#~0.6.1",
+    "gaia-switch": "gaia-components/gaia-switch",
+    "gaia-theme": "gaia-components/gaia-theme#dev"
   },
   "dependencies": {
-    "gaia-component": "gaia-components/gaia-component#~0.3.0",
-    "base": "gaia-components/base"
+    "gaia-component": "gaia-components/gaia-component#~0.3.6"
   }
 }
