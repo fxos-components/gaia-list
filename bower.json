@@ -12,16 +12,19 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "index.html",
+    "package.json",
+    "README.md"
   ],
   "devDependencies": {
     "base": "gaia-components/base",
-    "gaia-fonts": "gaia-components/gaia-fonts#~0.2.1",
-    "gaia-icons": "gaia-components/gaia-icons#~0.6.1",
+    "gaia-fonts": "gaia-components/gaia-fonts",
+    "gaia-icons": "gaia-components/gaia-icons",
     "gaia-switch": "gaia-components/gaia-switch",
-    "gaia-theme": "gaia-components/gaia-theme#dev"
+    "gaia-theme": "gaia-components/gaia-theme"
   },
   "dependencies": {
-    "gaia-component": "gaia-components/gaia-component#~0.3.6"
+    "gaia-component": "gaia-components/gaia-component#^0.3.6"
   }
 }

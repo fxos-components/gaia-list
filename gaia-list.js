@@ -25,6 +25,8 @@ var pointer = [
  */
 
 module.exports = component.register('gaia-list', {
+  extends: HTMLUListElement.prototype,
+
   created: function() {
     this.setupShadowRoot();
     this.els = { inner: this.shadowRoot.querySelector('.inner') };
@@ -62,6 +64,10 @@ module.exports = component.register('gaia-list', {
       ripple: document.createElement('div')
     };
 
+    requestAnimationFrame(this.ripple.bind(this, point, pos, els));
+  },
+
+  ripple: function(point, pos, els) {
     els.container.className = 'ripple-container';
     els.container.style.left = (pos.item.left - pos.list.left) + 'px';
     els.container.style.top = (pos.item.top - pos.list.top) + 'px';
@@ -81,13 +87,11 @@ module.exports = component.register('gaia-list', {
     els.container.appendChild(els.ripple);
     this.els.inner.appendChild(els.container);
 
-    // var reflow = els.ripple.offsetTop;
-    var scale = pos.item.width / 1.2;
     var duration = 500;
 
     setTimeout(function() {
       els.ripple.style.visibility = '';
-      els.ripple.style.transform = 'scale(' + scale + ')';
+      els.ripple.style.transform = 'scale(' + pos.item.width + ')';
       els.ripple.style.transitionDuration = duration  + 'ms';
       setTimeout(function() {
         els.ripple.style.transitionDuration = '1000ms';
