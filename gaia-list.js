@@ -27,6 +27,7 @@ var pointer = [
 module.exports = component.register('gaia-list', {
   created: function() {
     this.setupShadowRoot();
+
     this.els = { inner: this.shadowRoot.querySelector('.inner') };
     this.addEventListener('click', this.onPointerDown);
     this.makeAccessible();
@@ -128,8 +129,11 @@ module.exports = component.register('gaia-list', {
 
     /** Children
      ---------------------------------------------------------*/
+    ::content li {
+      outline: 0;
+    }
 
-    ::content > *:not(style) {
+    ::content li > *:not(style) {
       position: relative;
       z-index: 2;
 
@@ -153,7 +157,7 @@ module.exports = component.register('gaia-list', {
         var(--text-color);
     }
 
-    ::content > a {
+    ::content a {
       cursor: pointer;
     }
 
@@ -163,7 +167,9 @@ module.exports = component.register('gaia-list', {
     ::content h1,
     ::content h2,
     ::content h3,
-    ::content h4 {
+    ::content h4,
+    ::content .gaia-item-title {
+      display: block;
       font-weight: 400;
     }
 
@@ -176,7 +182,6 @@ module.exports = component.register('gaia-list', {
      * A helper attribute to allow users to
      * quickly define content as a flexbox.
      */
-
     ::content [flexbox] {
       display: flex;
     }
@@ -220,11 +225,13 @@ module.exports = component.register('gaia-list', {
       display: none;
     }
 
-    /** Titles
+    /** Descriptions
      ---------------------------------------------------------*/
 
     ::content small,
-    ::content p {
+    ::content p,
+    ::content .gaia-item-desc {
+      display: block;
       font-size: 0.7em;
       line-height: 1.35em;
     }
@@ -241,16 +248,29 @@ module.exports = component.register('gaia-list', {
       display: block;
     }
 
-    ::content > * > i:last-child {
+    /**
+     * Align the last icon to the border in RTL mode
+     */
+    ::content i:last-child {
       width: auto;
+    }
+
+    ::content i:last-child:before {
+      text-align: end;
     }
 
     /**
      * Reverse the icons when the document is RTL mode
      */
-
     :host-context([dir=rtl]) ::content i:before {
       transform: scale(-1, 1);
+    }
+
+    /**
+     * Align the first icon to have space with text
+     */
+    :host-context([dir=rtl]) ::content i:first-child {
+      text-align: end;
     }
 
     /** Divided
