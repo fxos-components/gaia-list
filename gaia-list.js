@@ -31,11 +31,19 @@ module.exports = component.register('gaia-list', {
     this.setupShadowRoot();
     this.els = { inner: this.shadowRoot.querySelector('.inner') };
     this.addEventListener('click', this.onPointerDown);
-    this.makeAccessible();
+    // process everything that doesn't affect user interaction
+    // after the component is created
+    setTimeout(() => this.makeAccessible());
   },
 
   makeAccessible: function() {
     [].forEach.call(this.children, (el) => { el.tabIndex = 0; });
+
+    // Make sure all icons are hidden from screen reader
+    var icons = this.getElementsByTagName('i');
+    for (var i = 0, len = icons.length; i < len; i++) {
+      icons[i].setAttribute('aria-hidden', true);
+    }
   },
 
   itemShouldRipple: function(el) {
