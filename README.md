@@ -75,6 +75,14 @@ Email style list (with time stamp)
 </gaia-list>
 ```
 
+### ripple
+
+Put `ripple` in class list will force trigger the ripple effect.
+
+Put `a` href in content will trigger the ripple effect automatically.
+
+Put `no-ripple` in class list will force NOT trigger the ripple effect.
+
 ### flexbox
 
 Defines the element as a `display: flex`.
