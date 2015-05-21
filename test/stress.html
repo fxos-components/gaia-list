@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>&lt;gaia-list&gt;</title>
+  <meta name="description" content="gaia-list perf" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="../bower_components/base/base.css">
+  <link rel="stylesheet" href="../bower_components/gaia-theme/gaia-theme.css">
+  <link rel="stylesheet" href="../bower_components/gaia-icons/gaia-icons.css">
+  <link rel="stylesheet" href="../bower_components/gaia-fonts/style.css">
+  <script src="../bower_components/gaia-component/gaia-component.js"></script>
+  <script src="../gaia-list.js"></script>
+  <style>
+  #result {
+    font: 8px;
+  }
+  </style>
+</head>
+<body role="application" class="theme-settings">
+<input id="input" value="100"/>
+<button id="run">Run</button>
+<div id="result"></div>
+<hr/>
+<div id="container"></div>
+
+<script>
+var results = []; // save test results
+var mean = 0; // average time
+
+run.onclick = function() {
+  container.innerHTML = '';
+  var count = Number(input.value);
+  var startTime = performance.now();
+
+  for (var i = 0; i < count; i++) {
+    container.insertAdjacentHTML('beforeend', `<gaia-list>
+    <a>
+      <i data-icon="brightness"></i>
+      <h3 flex>Menu ` + i + `</h3>
+      <i data-icon="forward-light"></i>
+    </a>
+    <a>
+      <i data-icon="location"></i>
+      <h3 flex>Menu 2</h3>
+      <i data-icon="forward-light"></i>
+    </a>
+    <a>
+      <i data-icon="settings"></i>
+      <h3 flex>Menu 3</h3>
+      <i data-icon="forward-light"></i>
+    </a></gaia-list>`);
+  }
+
+  results.push((performance.now() - startTime).toFixed(2));
+  mean = results.reduce(function(sum, num, idx) {
+    return sum + (num - sum)/(idx + 1)}, 0).toFixed(2);
+  // render result
+  result.innerHTML = '[mean: <font color="green">' + mean +
+    'ms</font> of ' + results.length + '], ' + results.join(' | ');
+};
+</script>
+</body>
+</html>
