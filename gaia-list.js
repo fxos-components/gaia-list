@@ -170,7 +170,9 @@ module.exports = component.register('gaia-list', {
     ::content h1,
     ::content h2,
     ::content h3,
-    ::content h4 {
+    ::content h4,
+    ::content .gaia-item-title {
+      display: block;
       font-weight: 400;
     }
 
@@ -231,7 +233,9 @@ module.exports = component.register('gaia-list', {
      ---------------------------------------------------------*/
 
     ::content small,
-    ::content p {
+    ::content p,
+    ::content .gaia-item-desc {
+      display: block;
       font-size: 0.7em;
       line-height: 1.35em;
     }
@@ -267,6 +271,7 @@ module.exports = component.register('gaia-list', {
     ::content .divided {
       -moz-border-start: solid 1px;
       -moz-padding-start: 14px;
+      border-radius: 0 !important;
 
       border-color:
         var(--border-color,
