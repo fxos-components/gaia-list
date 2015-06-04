@@ -224,7 +224,7 @@ module.exports = component.register('gaia-list', {
       display: none;
     }
 
-    /** Titles
+    /** Descriptions
      ---------------------------------------------------------*/
 
     ::content small,
@@ -255,6 +255,7 @@ module.exports = component.register('gaia-list', {
 
     :host-context([dir=rtl]) ::content i:before {
       transform: scale(-1, 1);
+      text-align: end;
     }
 
     /** Divided
