@@ -1,32 +1,55 @@
 # &lt;gaia-list&gt; [![](https://travis-ci.org/gaia-components/gaia-list.svg)](https://travis-ci.org/gaia-components/gaia-list) [![devDependency Status](https://david-dm.org/gaia-components/gaia-list/dev-status.svg)](https://david-dm.org/gaia-components/gaia-list#info=devDependencies)
 
+
 ## Installation
 
 ```bash
 $ bower install gaia-components/gaia-list
 ```
 
+
 ## Examples
 
 - [Example](http://gaia-components.github.io/gaia-list/)
 
+
 ## Usage
 
-Settings style list
+gaia-list provide semantic based declaration and class based declaration.
 
-```
+You can use `<hx>` as main text, use `p` or `small` as description.
+
+Or you can add `gaia-item-title` class to denote the element is the main text, add `gaia-item-desc` class to denote the element is the description.
+
+### Settings style list
+
+Semantic
+
+```html
 <gaia-list>
   <a>
-  <i data-icon="brightness"></i>
-  <h3 flex>Menu 1</h3>
-  <i data-icon="forward-light"></i>
+    <i data-icon="brightness"></i>
+    <h3 flex>Menu 1</h3>
+    <i data-icon="forward-light"></i>
   </a>
 </gaia-list>
 ```
 
-List with switch and divider
+class based
 
+```html
+<gaia-list>
+  <a>
+    <i data-icon="brightness"></i>
+    <div class="gaia-item-title" flex>Menu 1</div>
+    <i data-icon="forward-light"></i>
+  </a>
+</gaia-list>
 ```
+
+### List with switch and divider
+
+```html
 <gaia-list>
   <li class="ripple">
     <label flex flexbox for="wifi-switch">
@@ -38,7 +61,7 @@ List with switch and divider
 </gaia-list>
 ```
 
-Contacts style list
+### Contacts style list
 
 ```
 <gaia-list>
@@ -52,7 +75,7 @@ Contacts style list
 </gaia-list>
 ```
 
-Email style list (with time stamp)
+### Email style list (with time stamp)
 
 ```
 <gaia-list>
@@ -90,6 +113,7 @@ Defines the element as a `display: flex`.
 ### flex
 
 Expands element to fill available space `flex: 1`
+
 
 ## Lint check
 

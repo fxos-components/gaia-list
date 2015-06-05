@@ -28,18 +28,20 @@
       margin-bottom: var(--base-xxl);
     }
 
+    /** Settings
+     ---------------------------------------------------------*/
+
     gaia-list.settings [data-icon='forward'] {
       color: var(--text-color-minus);
     }
 
-    /* XXX temporary hack to make divider not inherit from switch */
-    gaia-list .divided {
-      border-radius: 0 !important;
-    }
+    /** Contact
+     ---------------------------------------------------------*/
 
-    gaia-list.contacts .face {
+    gaia-list.contacts .gaia-item-circular {
       position: absolute;
-      top: 50%; right: 16px;
+      top: 50%;
+      right: 16px;
       width: 40px;
       height: 40px;
       margin-top: -20px;
@@ -52,18 +54,22 @@
       background: var(--background-plus);
     }
 
-    [dir=rtl] gaia-list.contacts .face {
+    gaia-list.contacts .gaia-item-circular > img {
+      width: 100%;
+    }
+
+    [dir=rtl] gaia-list.contacts .gaia-item-circular {
       left: 16px;
       right: auto;
     }
 
-    gaia-list.email > * {
-      padding-left: 32px !important;
-    }
+    /** Email
+     ---------------------------------------------------------*/
 
     gaia-list.email time {
       position: absolute;
-      right: 0; top: 0;
+      right: 0;
+      top: 0;
       margin: 9px 16px;
       font-size: 0.7em;
       opacity: 0.6;
@@ -72,6 +78,10 @@
     [dir=rtl] gaia-list.email time {
       left: 0;
       right: auto;
+    }
+
+    gaia-list.email > * {
+      padding-left: 32px !important;
     }
 
     gaia-list.email p {
@@ -111,12 +121,12 @@
       </a>
       <a>
         <i data-icon="location"></i>
-        <h3 flex>Menu 2</h3>
+        <div class="gaia-item-title" flex>Menu 2</div>
         <i data-icon="forward-light"></i>
       </a>
       <a>
         <i data-icon="settings"></i>
-        <h3 flex>Menu 3</h3>
+        <span class="gaia-item-title" flex>Menu 3</span>
         <i data-icon="forward-light"></i>
       </a>
       <li class="ripple">
@@ -135,21 +145,21 @@
         <div>
           <h3>Noah Green</h3>
           <p>Atsara Kitchens</p>
-          <div class="face"></div>
+          <div class="gaia-item-circular"><img src="images/contact_image_1.png"/></div>
         </div>
       </a>
       <a>
         <div>
-          <h3>Will Grand</h3>
-          <p>CBN Studio</p>
-          <div class="face"></div>
+          <div class="gaia-item-title">Will Grand</div>
+          <div class="gaia-item-desc">CBN Studio</div>
+          <div class="gaia-item-circular"><img src="images/contact_image_2.png"/></div>
         </div>
       </a>
       <a>
         <div>
-          <h3>Carolina Grey</h3>
-          <p>Mozilla</p>
-          <div class="face"></div>
+          <span class="gaia-item-title">Carolina Grey</span>
+          <span class="gaia-item-desc">Mozilla</span>
+          <div class="gaia-item-circular"><img src="images/contact_image_3.png"/></div>
         </div>
       </a>
     </gaia-list>
@@ -182,17 +192,17 @@
       </a>
       <a class="unread">
         <div>
-          <h3>Jennifer Liu</h3>
-          <p>Road trip next weekend</p>
-          <p>I'vee been wanting to visit that place for a</p>
+          <div class="gaia-item-title">Jennifer Liu</div>
+          <div class="gaia-item-desc">Road trip next weekend</div>
+          <div class="gaia-item-desc">I'vee been wanting to visit that place for a</div>
           <time>11:30AM</time>
         </div>
       </a>
       <a>
         <div>
-          <h3>Michael Stanford</h3>
-          <p>You might like this or not?</p>
-          <p>Great find, I definitely check with Brian if</p>
+          <span class="gaia-item-title">Michael Stanford</span>
+          <span class="gaia-item-desc">You might like this or not?</span>
+          <span class="gaia-item-desc">Great find, I definitely check with Brian if</span>
           <time>11:30AM</time>
         </div>
       </a>
