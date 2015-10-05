@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="ltr">
 <head>
   <meta charset="utf-8" />
   <title>&lt;gaia-list&gt;</title>
@@ -36,19 +36,19 @@ run.onclick = function() {
   for (var i = 0; i < count; i++) {
     container.insertAdjacentHTML('beforeend', `<gaia-list>
     <a>
-      <i data-icon="brightness"></i>
+      <i data-icon="brightness" aria-hidden="true"></i>
       <h3 flex>Menu ` + i + `</h3>
-      <i data-icon="forward-light"></i>
+      <i data-icon="forward-light" aria-hidden="true"></i>
     </a>
     <a>
-      <i data-icon="location"></i>
+      <i data-icon="location" aria-hidden="true"></i>
       <h3 flex>Menu 2</h3>
-      <i data-icon="forward-light"></i>
+      <i data-icon="forward-light" aria-hidden="true"></i>
     </a>
     <a>
-      <i data-icon="settings"></i>
+      <i data-icon="settings" aria-hidden="true"></i>
       <h3 flex>Menu 3</h3>
-      <i data-icon="forward-light"></i>
+      <i data-icon="forward-light" aria-hidden="true"></i>
     </a></gaia-list>`);
   }
 
