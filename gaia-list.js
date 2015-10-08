@@ -257,12 +257,23 @@ module.exports = component.register('gaia-list', {
     }
 
     /**
-     * Reverse the icons when the document is RTL mode
+     * Deal with forward icons.
      */
 
-    :host-context([dir=rtl]) ::content i:before {
-      transform: scale(-1, 1);
-      text-align: end;
+    :host-context([dir="ltr"]) ::content i[data-icon="forward"]:before {
+      content: 'right';
+    }
+
+    :host-context([dir="rtl"]) ::content i[data-icon="forward"]:before {
+      content: 'left';
+    }
+
+    :host-context([dir="ltr"]) ::content i[data-icon="forward-light"]:before {
+      content: 'right-light';
+    }
+
+    :host-context([dir="rtl"]) ::content i[data-icon="forward-light"]:before {
+      content: 'left-light';
     }
 
     /** Divided
